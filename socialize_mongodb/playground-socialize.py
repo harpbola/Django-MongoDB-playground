@@ -3,10 +3,11 @@ sys.path.append('..')
 from django.core import management;
 import settings;
 management.setup_environ(settings)
-from socialize.models import Application, ApiUser, ApiUserProfile, Entity, Comment
+from socialize.models import Application, ApiUser, ApiUserProfile, Entity, Comment, Consumer
 
 def play_initial_insert():
     app = Application(name="Harpie Goes To Sleep.")
+    app.consumer = Consumer()
     app.save()
     print "App saved: %s" % app
     
@@ -56,6 +57,9 @@ def delete_comments():
     print "Deleting... %s" % comments
     comments.delete()
 
+apps = Application.objects.all()
+for app in apps:
+    app
 #play_initial_insert()   
 #insert_entity()
 #get_entities()

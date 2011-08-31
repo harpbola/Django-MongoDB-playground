@@ -1,16 +1,21 @@
 from django.db import models
 from djangotoolbox.fields import EmbeddedModelField, ListField
+
+"""
 class Tag(models.Model):
     title = models.CharField(max_length=300)
     
+    class Meta:
+        db_table = "blog_posts_tags"
+        
     def __str__(self):
-        return self.title
+        return self.title"""
     
 class Posts(models.Model):
     author = models.CharField(max_length=300)
     text = models.CharField(max_length=1024)
     date = models.DateTimeField(auto_now_add=True)
-    tags = models.ManyToManyField(Tag)
+    #tags = models.ManyToManyField(Tag)
     
     class Meta:
         db_table = "blog_posts"
@@ -59,9 +64,13 @@ class ApiUser(models.Model):
 #===============================================================================
 # Application
 #===============================================================================
+class Consumer(models.Model):
+    key = models.CharField(max_length=128)
+    secret = models.CharField(max_length=128)
+    
 class Application(models.Model):
     name = models.CharField(max_length=128)
-           
+    consumer = EmbeddedModelField(Consumer)
     class Meta:
         db_table = "socialize_application"
     
@@ -147,7 +156,7 @@ class Share(Activity):
     
     text = models.TextField()
     deleted = models.BooleanField(default=0, db_index=True)
-    medium = models.ManyToManyField(ShareMedium)
+    medium = EmbeddedModelField(ShareMedium)
     
     activity_type = 'share'
     

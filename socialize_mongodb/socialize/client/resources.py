@@ -27,7 +27,11 @@ class ApplicationResource(ClientResource):
     
     class Meta(ClientResource.Meta):
         queryset = Application.objects.all()
+        excludes = ['consumer']
         
+    def dehydrate_consumer(self, bundle, *args, **kwargs):
+        return bundle
+    
 class EntityResource(ClientResource):
     #application = fields.ForeignKey(ApplicationResource, 'application', full=True)
     

@@ -3,9 +3,9 @@ class MongoRouter(object):
     """A router to control all database operations on models in
     the myapp application"""
     db_name = 'mongodb'
-    supported_db_tables = ['blog_posts', 'api_user', 'api_user_profile', 'socialize_application',
+    supported_db_tables = ['blog_posts', 'blog_posts_tags', 'api_user', 'api_user_profile', 'socialize_application',
                            'socialize_comment', 'socialize_entity', 'socialize_like', 
-                           'socialize_share', 'socialize_medium']
+                           'socialize_share', 'socialize_medium', 'socialize_view']
     
     def is_supported(self, model):
 #        print  model._meta.db_table
