@@ -6,40 +6,45 @@ management.setup_environ(settings)
 from socialize.models import Application, ApiUser, ApiUserProfile, Entity, Comment, Consumer
 
 def play_initial_insert():
+    print "INITIAL application and user:"
     app = Application(name="Harpie Goes To Sleep.")
     app.consumer = Consumer()
     app.save()
-    print "App saved: %s" % app
+    print "  - App saved: %s" % app
     
     user = ApiUser(first_name="Harp")
     user.profile = ApiUserProfile(device_name='Android')
     user.save()
-    print "User saved: %s" % user
+    print "  - User saved: %s" % user
+    print ''
     
 def insert_entity():
+    print "CREATE entity"
     app = Application.objects.all()[0]
     print app
-    print "create entity"
+    print "  - create entity"
     entity = Entity(key="http://harpb.com")
-    print "set app"
+    print "  - set app"
     #entity.application_id = app.id
     entity.application = app
     #entity.application = Application(name='hey')
-    print "save entity"
+    print "  - save entity"
     entity.save()
     print entity
+    print ''
+    
+def get_entities():
+    entities = Entity.objects.all()
+    print "All entities: %s" % entities
+    print ''
     
 def delete_entities():
-    print "Delete entities"
+    print "DELETE entities"
     entities = Entity.objects.all()
     print "Deleting... %s" % entities
     entities.delete()
     #for entity in entities:
     #    entity.delete()
-    
-def get_entities():
-    entities = Entity.objects.all()
-    print entities
     
 def insert_comment():
     app = Application.objects.all()[0]
@@ -57,12 +62,14 @@ def delete_comments():
     print "Deleting... %s" % comments
     comments.delete()
 
+play_initial_insert()   
+insert_entity()
+get_entities()
+insert_comment()
+delete_comments()
+delete_entities()  
+
+print "\n ALL APPS"
 apps = Application.objects.all()
 for app in apps:
     app
-#play_initial_insert()   
-#insert_entity()
-#get_entities()
-#delete_entities()
-#insert_comment()
-#delete_comments()
